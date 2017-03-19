@@ -1,5 +1,5 @@
-#REACT NATIVE
-#0 Init
+# REACT NATIVE
+# 0 Init
 `react-native init <project name>`
 
 `react-native run-android`
@@ -14,8 +14,8 @@ Add adb to the env variables
 `react-native run-ios`
 [Open non https on iOS](http://blog.bigbinary.com/2016/07/27/open-non-https-sites-in-webview-in-react-native.html)
 
-#1
-##1.1 index.ios/android.js
+# 1
+## 1.1 index.ios/android.js
 _index.ios.js_ or _index.android.js_
 ```
 
@@ -34,7 +34,7 @@ _index.ios.js_ or _index.android.js_
 	
 ```
 
-##1.2 Function Component
+## 1.2 Function Component
 * Present static data
 * Can't handle fetching data
 * Easy to write
@@ -56,7 +56,7 @@ _header.js_
 ```
 
 
-##1.3 Send Props from root to child
+## 1.3 Send Props from root to child
 _index.ios.js_
 ```
 	
@@ -74,7 +74,7 @@ _header.js_
 	}
 ```
 
-##1.4 Class Component
+## 1.4 Class Component
 * Dynamic sources of data
 * Handles data that changes in time
 * Knows when and what to render
@@ -88,7 +88,7 @@ _header.js_
 	}
 ```
 
-##1.5 State
+## 1.5 State
 Init the state with the object you are going to use `state = {items:[]}`
 Use only `this.setState` to update the content of the state.
 
@@ -106,7 +106,7 @@ Use only `this.setState` to update the content of the state.
 	  	return (this.state.items.map(item => <Text> item.title </Text>))
 	  }
 ```
-##1.6 Passing children to components
+## 1.6 Passing children to components
 _ItemDetail.js_
 ```
 
@@ -134,7 +134,7 @@ _Card.js_
 
 In `{props.children}` Card will render what is the children of the calling component. In this case the caller is `ItemDetail` and the children `<Text>Title</Text>`
 
-##1.7 Buttons and Links
+## 1.7 Buttons and Links
 
 _caller_
 ```
@@ -161,8 +161,8 @@ _Button.js_
 The `onPress` action passed in the `caller` will be performed by the button. 
 The `children` will be rendered in the Button.
 
-#2
-##2.1 Common components
+# 2
+## 2.1 Common components
 * Add all the components to the same folder ie. `common`
 * Add a `index.js` file to this folder.
 * In `index.js` import and export the components.
