@@ -74,7 +74,7 @@ _header.js_
 	}
 ```
 
-#1.4 Class Component
+##1.4 Class Component
 * Dynamic sources of data
 * Handles data that changes in time
 * Knows when and what to render
@@ -88,7 +88,7 @@ _header.js_
 	}
 ```
 
-#2 State
+##1.5 State
 Init the state with the object you are going to use `state = {items:[]}`
 Use only `this.setState` to update the content of the state.
 
@@ -106,7 +106,7 @@ Use only `this.setState` to update the content of the state.
 	  	return (this.state.items.map(item => <Text> item.title </Text>))
 	  }
 ```
-#3 Passing children to components
+##1.6 Passing children to components
 _ItemDetail.js_
 ```
 
@@ -134,7 +134,7 @@ _Card.js_
 
 In `{props.children}` Card will render what is the children of the calling component. In this case the caller is `ItemDetail` and the children `<Text>Title</Text>`
 
-#4 Buttons and Links
+##1.7 Buttons and Links
 
 _caller_
 ```
