@@ -160,3 +160,25 @@ _Button.js_
 
 The `onPress` action passed in the `caller` will be performed by the button. 
 The `children` will be rendered in the Button.
+
+#2
+##2.1 Common components
+* Add all the components to the same folder ie. `common`
+* Add a `index.js` file to this folder.
+* In `index.js` import and export the components.
+
+```
+		export * from './Header'
+		export * from './Button'
+		...
+```
+
+* Export each component without `default` keyword
+
+	` export  { Header : Header } ` or directly if the key and value are the same `export  { Header } `
+
+
+* In the calling component import directly from the folder 
+``` import { Header } from './common'```
+
+
