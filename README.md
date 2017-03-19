@@ -4,7 +4,7 @@
 
 `react-native run-android`
 Add adb to the env variables
-```
+```javascript
 
 	export ANDROID_HOME=/Users/hugomatilla/Documents/AndroidSDKs/sdk
 	export PATH=${PATH}:${ANDROID_HOME}/tools
@@ -17,7 +17,7 @@ Add adb to the env variables
 # 1
 ## 1.1 index.ios/android.js
 _index.ios.js_ or _index.android.js_
-```
+```javascript
 
 	import React from 'react'
 	import { Text, AppRegistry } from 'react-native'
@@ -39,7 +39,7 @@ _index.ios.js_ or _index.android.js_
 * Can't handle fetching data
 * Easy to write
 _index.ios.js_
-```
+```javascript
 	
 	import Header from './src/components/Header'
 
@@ -49,7 +49,7 @@ _index.ios.js_
 
 _header.js_
 
-```
+```javascript
 
 	const Header = () => (<Text> Hello React </Text>)
 	}
@@ -58,7 +58,7 @@ _header.js_
 
 ## 1.3 Send Props from root to child
 _index.ios.js_
-```
+```javascript
 	
 	import Header from './src/components/Header'
 
@@ -68,7 +68,7 @@ _index.ios.js_
 
 _header.js_
 
-```
+```javascript
 
 	const Header = (props) => (<Text> props.headerText </Text>)
 	}
@@ -79,7 +79,7 @@ _header.js_
 * Handles data that changes in time
 * Knows when and what to render
 
-```
+```javascript
 
 	class Header extends Component{
 		render () {
@@ -92,7 +92,7 @@ _header.js_
 Init the state with the object you are going to use `state = {items:[]}`
 Use only `this.setState` to update the content of the state.
 
-```
+```javascript
 	
 	state = {items:[]}
 
@@ -108,7 +108,7 @@ Use only `this.setState` to update the content of the state.
 ```
 ## 1.6 Passing children to components
 _ItemDetail.js_
-```
+```js
 
 	const ItemDetail = () => {
 		return (
@@ -121,7 +121,7 @@ _ItemDetail.js_
 ```
 
 _Card.js_
-```
+```js
 
 	const Card = (props) => {
 	  return (
