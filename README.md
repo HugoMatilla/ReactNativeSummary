@@ -14,7 +14,7 @@ Add adb to the env variables
 `react-native run-ios`
 [Open non https on iOS](http://blog.bigbinary.com/2016/07/27/open-non-https-sites-in-webview-in-react-native.html)
 
-# 1
+# 1 Basics
 ## 1.1 index.ios/android.js
 _index.ios.js_ or _index.android.js_
 ```js
@@ -172,7 +172,7 @@ The `children` will be rendered in the Button.
 
 `TouchableOpacity` is one of the types of system buttons
 
-# 2
+# 2 Intermediate
 ## 2.1 Common components
 * Add all the components to the same folder ie. `common`
 * Add a `index.js` file to this folder.
@@ -246,4 +246,116 @@ More bindings
 	      .catch(this.onLoginFail.bind(this));
 	  });
 	}
+```
+# 3 Redux
+
+* **Action**:	An object that tells the reducer how to change its data
+* **Store**: An object that holds the applications data	(Reducer & State)
+* **Reducer**: A function that returns some data
+* **State**: Data for our app to use.	
+
+
+#### 1. The `Store` needs a reducer
+
+```js
+	
+	const store = Redux.createStore(reducer)
+```	
+
+#### 2. A `Reducer` is a function (arrow) that returns an array
+
+```js
+
+	const reducer = () => []
+```
+
+#### 3. The `Store` has the state
+
+```js
+
+	store.getState() 
+	>[] // the result of the reducer function
+```
+
+If we change the `Reducer` output the `Store` state changes
+
+```js
+
+	const reducer = () => [123]
+
+	store.getState() 
+	>[123] 
+
+```
+
+#### 4. The `Action`  is a plain JS Object the tells the `Reducer` that it needs to modify the state it is producing.
+
+The `Action` **must** define a `type` property that is a _string_.    
+
+`payload` is the data we want to use in the 'Action'
+
+```js
+
+	const action= {
+	  type: 'splitString',
+	  payload: 'asdf'
+	}
+
+```
+
+#### 5. The `Reducer` handles the action
+
+```js
+
+	const reducer = (state = [], action) => {
+		if (action.type === 'splitString'){
+	   		 return action.payload.split('')
+	 	}
+	  
+	  return state
+	}
+```
+
+#### 6. And the `Store` send the `Action` to the `Reducer`
+
+```js
+
+	store.dispatch(action)
+```
+
+#### 7. A final `getState` is needed to run the Action
+
+```js
+	
+	store.getState() 
+```
+
+### 8 Add a new action
+
+```js
+
+	const reducer = (state = [], action) => {
+		if (action.type === ...){
+		   ...
+		  }
+		  else if (action.type === 'addChar'){
+			state.push(action.payload)
+		    return state
+		  }
+	  
+	  return state
+	}
+```
+
+**NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
+**BAD**
+```js
+	
+	state.push(action.payload)
+```
+**RIGHT**
+ES6 Syntax to create a new object from another
+```js
+
+	return [...state, action.payload]
 ```
