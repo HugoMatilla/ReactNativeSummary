@@ -53,7 +53,6 @@ _header.js_
 ```js
 
 	const Header = () => (<Text> Hello React </Text>)
-	
 ```
 
 
@@ -64,7 +63,7 @@ _index.ios.js_
 	
 	import Header from './src/components/Header'
 
-	const App = () => (<Header headerText'={ 'Title' } />)	
+	const App = () => (<Header headerText={'Title'} />)	
 ```
 
 _header.js_
@@ -98,6 +97,7 @@ _header.js_
 
 ## 1.5 State
 Init the state with the object you are going to use `state = {items:[]}`
+
 Use only `this.setState` to update the content of the state.
 
 ```js
@@ -158,16 +158,19 @@ _Button.js_
 	const Button = ({ onPress, children }) => {
 	  return (
 	    <TouchableOpacity onPress={onPress}>
-	      <Text>
+	      <View>
 	        {children}
-	      </Text>
+	      </View>
 	    </TouchableOpacity>
 	  )
 	}
 ```
 
 The `onPress` action passed in the `caller` will be performed by the button. 
+
 The `children` will be rendered in the Button.
+
+`TouchableOpacity` is one of the types of system buttons
 
 # 2
 ## 2.1 Common components
@@ -203,10 +206,10 @@ We tell using state what the value is.
       />
 ```
 
-##2.3 Toggle views and binding
-Bind the context(this) to the function: `onPress={this.onButtonPress.bind(this)}`
-[Binding Docs](https://facebook.github.io/react/docs/handling-events.html)
-[Binding Approaches](https://medium.com/@housecor/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56#.a2wnywfmj)
+## 2.3 Toggle views and binding
+Bind the context (this) to the function: `onPress={this.onButtonPress.bind(this)}`   
+[Binding Docs](https://facebook.github.io/react/docs/handling-events.html)   
+[Binding Approaches](https://medium.com/@housecor/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56#.a2wnywfmj)   
 
 Using helper functions and returning a JSX 
 ```js
