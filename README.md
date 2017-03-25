@@ -347,7 +347,7 @@ The `Action` **must** define a `type` property that is a _string_.
 	}
 ```
 
-**NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
+### 9 **NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
 **BAD**
 ```js
 	
