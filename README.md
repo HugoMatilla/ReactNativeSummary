@@ -53,7 +53,7 @@ _header.js_
 ```js
 
 	const Header = () => (<Text> Hello React </Text>)
-	}
+	
 ```
 
 
@@ -64,8 +64,7 @@ _index.ios.js_
 	
 	import Header from './src/components/Header'
 
-	const App = () => (<Header headerText'={'Title'} />)
-	
+	const App = () => (<Header headerText'={ 'Title' } />)	
 ```
 
 _header.js_
@@ -73,7 +72,6 @@ _header.js_
 ```js
 
 	const Header = (props) => (<Text> props.headerText </Text>)
-	}
 ```
 
 ## 1.4 Class Component
@@ -83,11 +81,19 @@ _header.js_
 
 ```js
 
-	class Header extends Component{
-		render () {
-			return <Text> Hello React </Text>
-		}
+	import React, {Component} from 'react'
+	import {Text} from 'react-native'
+
+	class MyComponent extends Component {
+	  render () {
+	    return (
+	      <Text> Hello React </Text>
+	    )
+	  }
 	}
+
+	export default MyComponent
+
 ```
 
 ## 1.5 State
@@ -186,4 +192,55 @@ The `children` will be rendered in the Button.
  import { Header } from './common'
 ```
 
+## 2.2 TextIputs and state
+We tell using state what the value is.
 
+```js
+
+	<TextInput 
+        value={this.state.text}
+        onChangeText={text => this.setState({text})}
+      />
+```
+
+##2.3 Toggle views and binding
+Bind the context(this) to the function: `onPress={this.onButtonPress.bind(this)}`
+[Binding Docs](https://facebook.github.io/react/docs/handling-events.html)
+[Binding Approaches](https://medium.com/@housecor/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56#.a2wnywfmj)
+
+Using helper functions and returning a JSX 
+```js
+
+	renderButton() {
+	    if (this.state.loading) {
+	     	 return <Spinner size="small" />;
+	    } else {
+		    return (
+		      <Button onPress={this.onButtonPress.bind(this)}>
+		        Log in
+		      </Button>
+		    );
+		}
+	}
+	
+	...
+
+	render(
+		...
+		<CardSection>
+	  		{this.renderButton()}
+		</CardSection>
+	)
+```
+More bindings
+```js
+   
+	firebase.auth().signInWithEmailAndPassword(email, password)
+	  .then(this.onLoginSuccess.bind(this))
+	  .catch(() => {
+	    firebase.auth().createUserWithEmailAndPassword(email, password)
+	      .then(this.onLoginSuccess.bind(this))
+	      .catch(this.onLoginFail.bind(this));
+	  });
+	}
+```
