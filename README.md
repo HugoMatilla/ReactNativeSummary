@@ -480,7 +480,7 @@ _src/actions/index.js_
 	}
 ```
 
-###Calling `Action Creators`
+### Calling `Action Creators`
 
 `connect` second argument is used to bind/send `Action Creators` to the component as `props`.
 
@@ -497,7 +497,7 @@ After that the component can call them to create `Actions` (that will be perform
 	export default connect(null, actions)(ListItem)
 ```
 
-###Reducers 2
+### Reducers 2
 `state = null` returns null in case state is `undefined`
 ```js
 
@@ -528,8 +528,8 @@ Use `ownProps` as second argument to add new `props`
 	export default connect(mapStateToProps, actions)(ListItem)
 ```
 
-#4 UI 
-##ListView
+# 4 UI 
+## ListView
 
 ```js
 
