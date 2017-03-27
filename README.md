@@ -292,7 +292,7 @@ If we change the `Reducer` output the `Store` state changes
 
 The `Action` **must** define a `type` property that is a _string_.    
 
-`payload` is the data we want to use in the 'Action'
+`payload` is the data we want to use in the `Action`
 
 ```js
 
@@ -330,7 +330,7 @@ The `Action` **must** define a `type` property that is a _string_.
 	store.getState() 
 ```
 
-### 8 Add a new action
+#### 8. Add a new action
 
 ```js
 
@@ -347,7 +347,7 @@ The `Action` **must** define a `type` property that is a _string_.
 	}
 ```
 
-### 9 **NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
+#### 9. **NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
 **BAD**
 ```js
 	
@@ -359,3 +359,213 @@ ES6 Syntax to create a new object from another
 
 	return [...state, action.payload]
 ```
+## Boilerplate
+2 libraries needed
+
+* `> npm install --save redux` 
+* `> npm install --save react-redux`
+
+### Provider
+`Provider` holds `Stores` of our application, and allow the application to communicate with them.    
+`Provider` communication between `React` and `Redux`
+`Provider` Can have only one single child
+
+_app.js_
+
+```js
+
+	import React, {createStore} from 'react'
+	import {View} from 'react-native'
+	import {Provider} from 'react-redux'
+	import reducers from './reducers'
+
+	const App = () => {
+	  return (
+	    <Provider store={createStore(reducers)}>
+	      <View />
+	    </Provider>
+	  )
+	}
+
+	export default App
+
+	
+```
+
+### Reducers
+
+`combineReducers` allows easily work with several `Reducers`
+
+_src/reducers/index.js_
+
+```js
+
+	import {combineReducers} from 'redux'
+	import LibraryReducer from './LibraryReducer'
+
+	export default combineReducers({
+	  libraries: LibraryReducer
+	})
+```
+
+_src/reducers/LibraryReducer.js_
+```js
+	
+	import data from './LibraryList.json'
+
+	export default () => data
+```	
+ 
+### Connect State to Components
+Use the `connect` helper.
+
+`export default connect(<"What you want the Props to be">)("The component to add the Props")`
+
+`import { connect } from 'react-redux'`
+
+```js
+
+	export default connect(mapStateToProps)(LibraryList)
+
+```
+
+To send the state to the component we need to send is as `Props`
+```js
+
+	const mapStateToProps = state => {
+		return { libraries: state.libraries 
+	}
+}
+```
+
+_allTogether_
+```js
+
+	class LibraryList extends Component {
+	  render () {
+	  	console.log(this.props)
+	    return ;
+	    
+	  }
+	}
+
+	const mapStateToProps = state => {
+	  return { libraries: state.libraries }
+	}
+
+	export default connect(mapStateToProps)(LibraryList)
+
+	> libraries: [....]
+```
+
+## Action Creator
+`Action Creator`
+
+```js
+
+	() => {
+	  return {
+	    type: 'actionName'
+	  }
+```
+
+_src/actions/index.js_
+```js
+
+	export const selectLibrary = (libraryId) => {
+	  return {
+	    type: 'select_library',
+	    payload: libraryId
+	  }
+	}
+```
+
+###Calling `Action Creators`
+
+`connect` second argument is used to bind/send `Action Creators` to the component as `props`.
+
+`export default connect(null, actions)(ListItem)`
+
+After that the component can call them to create `Actions` (that will be performed by the `Reducer` and will change the `State` of the `Store`)  
+
+
+```js
+
+	import * as actions from '../actions' // get all actions
+
+
+	export default connect(null, actions)(ListItem)
+```
+
+###Reducers 2
+`state = null` returns null in case state is `undefined`
+```js
+
+	export default (state = null, action) => {
+	  switch (action.type) {
+	    case 'select_library':
+	      return action.payload
+	    default:
+	      return state
+	  }
+	}
+
+```
+
+## Moving logic out of components
+Add logic to the `mapStateToProps`
+
+Use `ownProps` as second argument to add new `props`
+
+```js
+
+	const mapStateToProps = (state, ownProps) => {
+	  const expanded = state.selectedLibraryId === ownProps.library.id
+
+	  return { expanded }
+	}
+
+	export default connect(mapStateToProps, actions)(ListItem)
+```
+
+#4 UI 
+##ListView
+
+```js
+
+	import { ListView } from 'react-native' 
+
+	class MyComponent extends Component {
+	  constructor() {
+	    super();
+	    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+	    this.state = {
+	      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+	    };
+	  }
+
+	  render() {
+	    return (
+	      <ListView
+	        dataSource={this.state.dataSource}
+	        renderRow={(rowData) => <Text>{rowData}</Text>}
+	      />
+	    );
+	  }
+	}
+
+
+```
+
+## Animation
+```js
+
+	import {LayoutAnimation} from 'react-native'
+
+	class ListItem extends Component {
+	  componentWillUpdate () {
+    	LayoutAnimation.spring()
+  	}
+
+
+```	
