@@ -592,9 +592,14 @@ Use `ownProps` as second argument to add new `props`
 
 `npm install --save redux-thunk`
 
-![][image2]
-
-[image2]: ./img/redux2.png 
+* 1. Action Creator is called
+* 2. Action Creator returns a Function
+* 3. Redux Thunk sees that we returned a function and calls it with dispatch as parameter
+* 4. We do the login request
+* 5. Wait...
+* 6. Request is complete, user is logged in
+* 7. `.then` runs
+* 8. Dispatch our action
 
 ```js
 
