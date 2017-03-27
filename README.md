@@ -289,9 +289,9 @@ If we change the `Reducer` output the `Store` state changes
 
 ```
 
-#### 4. The `Action`  is a plain JS Object the tells the `Reducer` that it needs to modify the state it is producing.
+#### 4. The `Action`  is a plain JS Object that tells the `Reducer` that it needs to modify the state it is producing.
 
-The `Action` **must** define a `type` property that is a _string_.    
+The `Action` **MUST** define a `type` property that is a _string_.    
 
 `payload` is the data we want to use in the `Action`
 
@@ -338,20 +338,20 @@ The `Action` **must** define a `type` property that is a _string_.
 	const reducer = (state = [], action) => {
 		if (action.type === ...){
 		   ...
-		  }
-		  else if (action.type === 'addChar'){
+		}
+		else if (action.type === 'addChar'){
 			state.push(action.payload)
 		    return state
-		  }
+		}
 	  
-	  return state
+	  	return state
 	}
 ```
 
 #### 9. **NEVER MODIFY THE STATE OBJECT: CREATE A NEW ONE**
 **BAD**
 ```js
-	
+
 	state.push(action.payload)
 ```
 **RIGHT**
@@ -368,7 +368,7 @@ ES6 Syntax to create a new object from another
 
 ### Provider
 `Provider` holds `Stores` of our application, and allow the application to communicate with them.    
-`Provider` communication between `React` and `Redux`
+`Provider` communication between `React` and `Redux`    
 `Provider` Can have only one single child
 
 _app.js_
