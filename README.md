@@ -14,6 +14,9 @@ Add adb to the env variables
 `react-native run-ios`
 [Open non https on iOS](http://blog.bigbinary.com/2016/07/27/open-non-https-sites-in-webview-in-react-native.html)
 
+
+`Cmd-D` in the emulator and go to [Debugger URL](http://localhost:8081/debugger-ui)
+
 # 1 Basics
 ## 1.1 index.ios/android.js
 _index.ios.js_ or _index.android.js_
@@ -439,9 +442,8 @@ To send the state to the component we need to send is as `Props`
 ```js
 
 	const mapStateToProps = state => {
-		return { libraries: state.libraries 
+		return { libraries: state.libraries }
 	}
-}
 ```
 
 _allTogether_
@@ -533,6 +535,10 @@ Use `ownProps` as second argument to add new `props`
 
 	export default connect(mapStateToProps, actions)(ListItem)
 ```
+## Redux Constraints
+* Single State Tree (Plain Object)
+* Actions Describe Updates (Plain Object)
+* Reducers Apply Updates (Pure functions. Receive a state and an action and returns a new state. No more data is needed to perform it)
 
 # 4 UI 
 ## ListView
@@ -575,3 +581,54 @@ Use `ownProps` as second argument to add new `props`
 
 
 ```	
+
+# Complex Redux
+## Async Action Creators - `Redux Thunk`
+| Standard                                          | Thunk                                       |
+|---------------------------------------------------|----------------------------------------------|
+| `Action Creators` are functions                   | `Action Creators` are functions              |
+| Must return an `Action`                           | Must return a **function**                   |
+| An `Action` is an object with a `type` property   | This function will be called with `dispatch` |
+
+`npm install --save redux-thunk`
+
+![][image2]
+
+[image2]: ./img/redux2.png 
+
+```js
+
+	import { createStore, applyMiddleware } from 'redux'
+	import ReduxThunk from 'redux-thunk'
+
+	...
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
+    return (
+      <Provider store={store}>
+      ...
+```
+
+_actions.js_
+```js
+
+	export const loginUser = ({ email, password }) => {
+	  return (dispatch) => {
+	    firebase.auth().signInWithEmailAndPassword(email, password)
+	      .then(user => {
+	      	dispatch({ type: LOGIN_USER, payload: user })
+	      	})
+	      }
+	    } 
+	}
+```
+
+# Appendix
+## Errors
+#### Error: Element type is invalid: expected a string (for built-in components)
+```js
+
+	import { LibraryList } from './components/LibraryList'; 
+```
+
+We don't use the curly braces when we export an item with the default keyword.  The library list is exported from 'LibraryList.js' with the 'default' keyword, so remove the curly braces here.
