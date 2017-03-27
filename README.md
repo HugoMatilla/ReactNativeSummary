@@ -262,7 +262,8 @@ More bindings
 	const store = Redux.createStore(reducer)
 ```	
 
-#### 2. A `Reducer` is a function (arrow) that returns an array
+#### 2. A `Reducer` is a function (arrow). 
+This one returns an array
 
 ```js
 
