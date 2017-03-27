@@ -258,7 +258,7 @@ More bindings
 #### 1. The `Store` needs a reducer
 
 ```js
-	
+
 	const store = Redux.createStore(reducer)
 ```	
 
