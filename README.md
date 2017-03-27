@@ -369,7 +369,7 @@ ES6 Syntax to create a new object from another
 ### General
 ![][image1]
 
-[image1]: https://photos-3.dropbox.com/t/2/AADQC0X3zmGUcyE5nhzx9tFx-cahbR5wXCqkUK14FCnAdg/12/199706036/png/32x32/1/_/1/2/Screenshot%202017-03-27%2012.09.46.png/EM3RkJcBGPupBiACKAI/gzrwd5Qti_kIW-ydWz0WQBcfH9_oK3GFGa9W0GH2PCg?size=2048x1536&size_mode=3 
+[image1]: ./img/redux1.png 
 
 ### Provider
 `Provider` holds `Stores` of our application, and allow the application to communicate with them.    
