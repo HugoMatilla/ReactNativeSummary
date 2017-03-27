@@ -366,6 +366,11 @@ ES6 Syntax to create a new object from another
 * `> npm install --save redux` 
 * `> npm install --save react-redux`
 
+### General
+![][image1]
+
+[image1]: https://www.dropbox.com/s/gj9pe9smzr7ghd3/Screenshot%202017-03-27%2012.09.46.png?dl=0 
+
 ### Provider
 `Provider` holds `Stores` of our application, and allow the application to communicate with them.    
 `Provider` communication between `React` and `Redux`    
