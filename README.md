@@ -358,6 +358,7 @@ The `Action` **MUST** define a `type` property that is a _string_.
 	state.push(action.payload)
 ```
 **RIGHT**
+
 ES6 Syntax to create a new object from another
 ```js
 
@@ -375,9 +376,9 @@ ES6 Syntax to create a new object from another
 [image1]: ./img/redux1.png 
 
 ### Provider
-`Provider` holds `Stores` of our application, and allow the application to communicate with them.    
-`Provider` communication between `React` and `Redux`    
-`Provider` Can have only one single child
+* Holds `Stores` of our application, and allow the application to communicate with them.    
+* Communication between `React` and `Redux`    
+* Can have only one single child
 
 _app.js_
 
@@ -500,13 +501,20 @@ After that the component can call them to create `Actions` (that will be perform
 ```js
 
 	import * as actions from '../actions' // get all actions
-
+	...
+	<TouchableWithoutFeedback
+        onPress={() => this.props.selectLibrary(id)} //`selectLibrary()` is an action from '	actions'
+      >
+	...
 
 	export default connect(null, actions)(ListItem)
 ```
 
 ### Reducers 2
 `state = null` returns null in case state is `undefined`
+
+Good Practice: `state = INITIAL_STATE` and use `INITIAL_STATE` any time we want to reset the state of the app, or some of the data `[...INITIAL_STATE, isLogged:true]`
+ 
 ```js
 
 	export default (state = null, action) => {
@@ -592,14 +600,14 @@ Use `ownProps` as second argument to add new `props`
 
 `npm install --save redux-thunk`
 
-* 1. Action Creator is called
-* 2. Action Creator returns a Function
-* 3. Redux Thunk sees that we returned a function and calls it with dispatch as parameter
-* 4. We do the login request
-* 5. Wait...
-* 6. Request is complete, user is logged in
-* 7. `.then` runs
-* 8. Dispatch our action
+1. Action Creator is called
+2. Action Creator returns a Function
+3. Redux Thunk sees that we returned a function and calls it with dispatch as parameter
+4. We do the login request
+5. Wait...
+6. Request is complete, user is logged in
+7. `.then` runs
+8. Dispatch our action
 
 ```js
 
@@ -627,8 +635,166 @@ _actions.js_
 	    } 
 	}
 ```
+# 5 Navigation with react-native-router-flux
+Scenes have 3 parameters:
 
+* `key`
+* `component`
+* `title`
+
+Extras:
+
+* `initial`
+_Router.js_
+
+```js
+
+	import React from 'react'
+	import { Scene, Router } from 'react-native-router-flux'
+	...
+
+	const RouterComponent = () => {
+	  return (
+	    <Router sceneStyle={{ paddingTop: 65 }}>
+	        <Scene key='login' component={LoginForm} title='Please Login' initial />
+	        <Scene key='employeeList' component={EmployeeList} title='Employee List' />
+	    </Router>
+	  )
+	}
+
+	export default RouterComponent
+```
+
+_app.js_
+
+```js 
+
+	import Router from './Router'
+
+	<Provider store={store}>
+      <Router />
+    </Provider>
+```
+## 5.1 Navigate
+
+`import { Actions } from 'react-native-router-flux'`
+
+```js
+
+	import { Actions } from 'react-native-router-flux'
+
+	const loginUserSuccess = (dispatch, user) => {
+	  dispatch({
+	    type: LOGIN_USER_SUCCESS,
+	    payload: user
+	  })
+
+	  Actions.employeeList () // This will fire the new Scene using the `key` property
+	}
+```	
+
+## 5.2 Scenes nesting
+```js 	
+
+	<Scene key='auth'>
+		<Scene key='login' component={LoginForm} title='Please Login' />
+	</Scene>
+
+	<Scene key='main'>
+		<Scene key='employeeCreate' component={EmployeeCreate} title='Create Employee' />
+		<Scene key='employeeEdit' component={EmployeeEdit} title='Edit Employee' />
+	</Scene>
+```      
+
+
+## 5.3 Add more functionality
+[Docs](https://github.com/aksonov/react-native-router-flux/blob/master/docs/API_CONFIGURATION.md)
+```js
+
+	<Scene
+          onRight={() => Actions.employeeCreate()} // go to another Scence
+          rightTitle='Add'
+          key='employeeList'
+          component={EmployeeList}
+          title='Employees'
+          initial
+        />
+```        
 # Appendix
+##Key Interpolation and Actions
+`[action.payload.prop]` the key value is defined at run time
+_action_
+
+Action has the `prop` to change and its `value`
+```js
+	
+	export const employeeUpdate = ({ prop, value }) => {
+	  return {
+	    type: EMPLOYEE_UPDATE,
+	    payload: { prop, value }
+	  };
+	};
+	```
+
+_reducer_
+```js
+
+	export default (state = INITIAL_STATE, action) => {
+	  switch (action.type) {
+	    case EMPLOYEE_UPDATE:
+	      return { ...state, [action.payload.prop]: action.payload.value };
+	  }
+	};
+```
+## Override styles in components
+The style most at the right of the array of styles will override the ones on the left `[styles.containerStyle, props.style]`
+```js
+
+	const CardSection = (props) => {
+	  return (
+	    <View style={[styles.containerStyle, props.style]}>
+	      {props.children}
+	    </View>
+	  )
+	}
+
+```
+## Firebase
+Rules 
+_Basic_
+```js
+
+	{
+	  "rules": {
+	    ".read": "auth != null",
+	    ".write": "auth != null"
+	  }
+	}
+```
+_Better_
+```js
+
+	{
+	  "rules": {
+			"users": {
+	      "$uid": {
+	        ".read":"$uid === auth.uid",
+	        ".write":"$uid === auth.uid"
+	      }
+	    }
+	  }
+	}
+```
+
+## componentWillReceiveProps
+`nextProps`  are the next set of props that this component  will be rendered with `this.props` is still the old set of props
+```js
+
+	componentWillReceiveProps(nextProps) {
+	    this.createDataSource(nextProps);
+	  }
+```	  
+
 ## Errors
 #### Error: Element type is invalid: expected a string (for built-in components)
 ```js
